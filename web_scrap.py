@@ -1,9 +1,10 @@
+import psycopg2
 from bs4 import BeautifulSoup
 import requests
 import pandas as pd
 import time
 import random
-from postgres import insert_query, create_table
+from postgres import db_con, create_table
 # from proxies_checker import fetch_proxies
 
 time.sleep(3)
@@ -79,14 +80,26 @@ if table:
             'Close': close_price,
             # 'Adj Close': adj_close_price,
             # 'Volume': volume
-            }) 
-# for entry in scrapped_data:
-    # print(entry)
-# puting list information into DataFrame for further use in more common view
-entry = pd.DataFrame(scrapped_data, columns=['Date', 'Close'])
-get_rows = entry.head(-1)
-get_rows.to_csv('SP500.csv', index=False)
-# print(get_rows)
-# create_table()
-# insert_query(get_rows)
+            })
+db_con()
+create_table()
+# taking data from our scrapped_data list and inserting into database
+for entry in scrapped_data:
+    date = entry['Date']
+    close_price = entry['Close']
+
+    connection = psycopg2.connect(**db_con())
+    cursor = connection.cursor()
+
+    insert_data_into_table = """
+            INSERT INTO sp500 (date, close)
+            VALUES (%s, %s)
+        """
+    values = (date, close_price)
+
+    cursor.execute(insert_data_into_table, values)
+
+    connection.commit()
+    cursor.close()
+    connection.close()
     
