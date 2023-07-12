@@ -7,7 +7,7 @@ def db_con():
         'port': 5432,
         'database': 'vcs_final_project',
         'user': 'postgres',
-        'password': 'barabanas12'
+        'password': '123654'
     }
     return db_settings
 # Function to create table into vcs_final_project database

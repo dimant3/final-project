@@ -52,11 +52,26 @@ sp500['Deviation from average'] = round(sp500['close'] - sp500['close'].mean(axi
 # 'close' column average for each index: nasdaq = 1244.74 , rusell = 1875.87 , sp500 = 384.84
 
 
+#Now finding how many months each INDEX closed above the average price using Boolean
+nasdaq_above_index_avg = nasdaq.value_counts(nasdaq['Close'] > nasdaq['Close'].mean())
+rusell_above_index_avg = rusell_columns.value_counts(rusell_columns['Close'] > rusell_columns['Close'].mean())
+sp500_above_index_avg = sp500.value_counts(sp500['close'] > sp500['close'].mean())
+# month for each INDEX closed above the average price: nasdaq = 20 , rusell = 18 , sp500 = 19
+# month for each INDEX closed below the average price: nasdaq = 16 , rusell = 18 , sp500 = 17
 
+# Here we wanted to see which INDEX has highest difference between min and max in portfolio values
+min_max_dif_nasdaq = np.ptp(nasdaq['Portfolio value'])
+min_value_nasdaq = np.min(nasdaq['Portfolio value']) # 7708.17
+max_value_nasdaq = np.max(nasdaq['Portfolio value']) # 16429.45
 
+min_max_dif_rusell = np.ptp(rusell_columns['Portfolio value'])
+min_value_rusell = np.min(rusell_columns['Portfolio value']) # 7144.1
+max_value_rusell = np.max(rusell_columns['Portfolio value']) # 14315.14
 
-
-
+min_max_dif_sp500 = np.ptp(sp500['Portfolio value'])
+min_value_sp500 = np.min(sp500['Portfolio value']) # 8011.38
+max_value_sp500 = np.max(sp500['Portfolio value']) # 14762.69
+# we found out highest difference between min and max in: nasdaq = 8721.28, rusell = 7171.04 , sp500 = 6751.31
 
 
 
@@ -67,4 +82,3 @@ sp500['Deviation from average'] = round(sp500['close'] - sp500['close'].mean(axi
 # nasdaq_index = np.array([nasdaq['Close']])
 # rusell_index = np.array([rusell_columns['Close']])
 # sp500_index = np.array([sp500['close']])
-
