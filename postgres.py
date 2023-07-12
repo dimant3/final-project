@@ -1,12 +1,11 @@
 import psycopg2
-
 # postgres connection settings
 db_settings = {
     'host': 'localhost',
     'port': 5432,
     'database': 'vcs_final_project',
     'user': 'postgres',
-    'password': 'barabanas12'
+    'password': '123654'
 }
 # Function to create table into vcs_final_project database
 def create_table():

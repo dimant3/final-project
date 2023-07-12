@@ -3,6 +3,7 @@ import requests
 import pandas as pd
 import time
 import random
+from postgres import insert_query, create_table
 # from proxies_checker import fetch_proxies
 
 time.sleep(3)
@@ -69,20 +70,23 @@ if table:
         except IndexError:
             volume = ""
 
-        #inserting 'Date' and 'Close' values from url to the list scrapped_data
+        #inserting all table values from url to the list scrapped_data
         scrapped_data.append({
             'Date': date,
-            'Open': open_price,
-            'High': high_price,
-            'Low': low_price,
+            # 'Open': open_price,
+            # 'High': high_price,
+            # 'Low': low_price,
             'Close': close_price,
-            'Adj Close': adj_close_price,
-            'Volume': volume
+            # 'Adj Close': adj_close_price,
+            # 'Volume': volume
             }) 
-for entry in scrapped_data:
-    print(entry)
+# for entry in scrapped_data:
+    # print(entry)
 # puting list information into DataFrame for further use in more common view
-    df = pd.DataFrame(entry)
-    print(df)
-
+entry = pd.DataFrame(scrapped_data, columns=['Date', 'Close'])
+get_rows = entry.head(-1)
+get_rows.to_csv('SP500.csv', index=False)
+# print(get_rows)
+# create_table()
+# insert_query(get_rows)
     
