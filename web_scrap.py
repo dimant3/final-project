@@ -26,20 +26,63 @@ soup = BeautifulSoup(content, 'html.parser')
 # getting needed data from url table
 scrapped_data = []
 
-table = soup.find('table', class_='W(100%) M(0)')
+table = soup.find('table', class_='W(100%)')
 if table:
     rows = table.find_all('tr')
     for row in rows[1:]:
+        if 'Dividend' in row.text:
+            continue
         columns = row.find_all('td')
-        date = columns[0].text.strip()
-        close = columns[-3].text.strip()
-        if close == '':
-            proxy = next       
-            break
-        # scrapped_data.append((date, close))
-        print(close)
 
-# df = pd.DataFrame(scrapped_data)
-# print(df)
+        try:
+            date = columns[0].text.strip()
+        except IndexError:
+            date = ""
+
+        try:
+            open_price = columns[1].text.strip()
+        except IndexError:
+            open_price = ""
+
+        try:
+            high_price = columns[2].text.strip()
+        except IndexError:
+            high_price = ""
+
+        try:
+            low_price = columns[3].text.strip()
+        except IndexError:
+            low_price = ""
+
+        try:
+            close_price = columns[4].text.strip()
+        except IndexError:
+            close_price = ""
+
+        try:
+            adj_close_price = columns[5].text.strip()
+        except IndexError:
+            adj_close_price = ""
+
+        try:
+            volume = columns[6].text.strip()
+        except IndexError:
+            volume = ""
+
+        #inserting 'Date' and 'Close' values from url to the list scrapped_data
+        scrapped_data.append({
+            'Date': date,
+            'Open': open_price,
+            'High': high_price,
+            'Low': low_price,
+            'Close': close_price,
+            'Adj Close': adj_close_price,
+            'Volume': volume
+            }) 
+for entry in scrapped_data:
+    print(entry)
+# puting list information into DataFrame for further use in more common view
+    df = pd.DataFrame(entry)
+    print(df)
 
     

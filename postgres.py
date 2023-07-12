@@ -16,7 +16,7 @@ def create_table():
     create_table_query = """
     CREATE TABLE IF NOT EXISTS sp500 (
     id SERIAL PRIMARY KEY,
-    Date VARCHAR(10),
+    Date DATE,
     Close INTEGER
     )
     """
