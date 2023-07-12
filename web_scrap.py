@@ -10,7 +10,7 @@ time.sleep(3)
 # proxies = fetch_proxies()
 # random_proxy = random.choice(proxies)
 
-target = "https://finance.yahoo.com/quote/SPY/history?period1=1577836800&period2=1672531200&interval=1mo&filter=history&frequency=1mo&includeAdjustedClose=true"
+target = "https://finance.yahoo.com/quote/SPY/history?period1=1577836800&period2=1672531200&interval=1mo&filter=history&frequency=1mo&includeAdjustedClose=false"
 # user-agent header in the http request which identifies the client making the request
 headers = {
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'}
@@ -32,10 +32,10 @@ if table:
     for row in rows[1:]:
         columns = row.find_all('td')
         date = columns[0].text.strip()
-        close = columns[-1].text.strip()
+        close = columns[-3].text.strip()
         if close == '':
-            proxy = close(skiprows=[2])       
-
+            proxy = next       
+            break
         # scrapped_data.append((date, close))
         print(close)
 
