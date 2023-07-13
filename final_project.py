@@ -2,6 +2,7 @@ import pandas as pd
 from postgres import work_with_database
 import numpy as np
 import matplotlib.pyplot as plt
+import seaborn as sns
 
 # formatting Nasdaq csv: date format and column split
 nasdaq = pd.read_csv('Nasdaq OMX baltic.csv')
@@ -56,10 +57,25 @@ rusell['Portfolio value'] = round(rusell_starting_stocks_qty * rusell['Close'], 
 sp500_starting_stocks_qty = float(sp500_starting_stocks_qty)
 sp500['Portfolio value'] = round(sp500_starting_stocks_qty * sp500['close'], 2)
 
-# calculated ROI by month for each index (graph 2)
+# calculated ROI by month for each index
 nasdaq['ROI %'] = round((nasdaq['Close'].pct_change()) * 100, 2)
 rusell['ROI %'] = round((rusell['Close'].pct_change()) * 100, 2)
 sp500['ROI %'] = round((sp500['close'].pct_change()) * 100, 2)
+
+# calculated total ROI for whole period (3 years) for each index (graph 2)
+nasdaq_total_roi = (nasdaq['Portfolio value'][35] - nasdaq['Portfolio value'][0]) / nasdaq['Portfolio value'][0] * 100
+nasdaq_rounded_roi = round(nasdaq_total_roi, 2)
+
+rusell_total_roi = (rusell['Portfolio value'][35] - rusell['Portfolio value'][0]) / rusell['Portfolio value'][0] * 100
+rusell_rounded_roi = round(rusell_total_roi, 2)
+
+sp500_total_roi = (sp500['Portfolio value'][35] - sp500['Portfolio value'][0]) / sp500['Portfolio value'][0] * 100
+sp500_rounded_roi = round(sp500_total_roi, 2)
+
+total_rois = pd.DataFrame({
+    'Stocks index': ['Nasdaq', 'Russell2000', 'SP500'],
+    'Total ROI': [nasdaq_rounded_roi, rusell_rounded_roi, sp500_rounded_roi]
+})
 
 # calculating deviation from average close price for each index (graph 3). axis=0 is column
 nasdaq['Deviation from average'] = round(nasdaq['Close'] - nasdaq['Close'].mean(axis=0), 2)
@@ -104,34 +120,94 @@ max_value_sp500 = np.max(sp500['Portfolio value']) # 14762.69
         # In next steps we creating visualization with matplotlib and seaborn
 
 # Adding x variable for X-Axis "Date" values
-x = rusell['Date']
+# x = rusell['Date']
 
-#plot each INDEX portfolio value
-plt.plot(x, nasdaq['Portfolio value'], label='Nasdaq', color='green')
-plt.plot(rusell['Portfolio value'], label='Rusell2000', color='blue')
-plt.plot(sp500['Portfolio value'], label='SP500', color='red')
-
-# Marking highest value points in each index
-plt.plot(highest_nasdaq_value_index, max_value_nasdaq, marker='o', color='black', label="Highest")
-plt.plot(lowest_nasdaq_value_index, min_value_nasdaq, marker='o', color='black', label="Highest")
-
-plt.plot(highest_rusell_value_index, max_value_rusell, marker='o', color='black')
-plt.plot(lowest_rusell_value_index, min_value_rusell, marker='o', color='black')
-
-plt.plot(highest_sp500_value_index, max_value_sp500, marker='o', color='black')
-plt.plot(lowest_sp500_value_index, min_value_sp500, marker='o', color='black')
-
+# 1. creating line chart each INDEX portfolio value
+# plt.plot(x, nasdaq['Portfolio value'], label='Nasdaq', color='green')
+# plt.plot(rusell['Portfolio value'], label='Russell2000', color='blue')
+# plt.plot(sp500['Portfolio value'], label='SP500', color='red')
+#
+# # Marking the highest value points in each index
+# plt.plot(highest_nasdaq_value_index, max_value_nasdaq, marker='o', color='black', label="Highest")
+# plt.plot(lowest_nasdaq_value_index, min_value_nasdaq, marker='o', color='black', label="Lowest")
+#
+# plt.plot(highest_rusell_value_index, max_value_rusell, marker='o', color='black')
+# plt.plot(lowest_rusell_value_index, min_value_rusell, marker='o', color='black')
+#
+# plt.plot(highest_sp500_value_index, max_value_sp500, marker='o', color='black')
+# plt.plot(lowest_sp500_value_index, min_value_sp500, marker='o', color='black')
 
 #add legend
-plt.legend(title='Portflio values by INDEX')
+# plt.legend(title='Portfolio values by INDEX')
 
 #add x and y axes with labels and a title
-plt.ylabel('Value €', fontsize=14)
-plt.xlabel('Date', fontsize=14)
-plt.title('Portfolios by INDEX', fontsize=16)
-plt.xticks(x, rotation=45)
-plt.grid()
-plt.show()
+# plt.ylabel('Value €', fontsize=14)
+# plt.xlabel('Date', fontsize=14)
+# plt.title('Portfolios by INDEX', fontsize=16)
+# plt.xticks(x, rotation=45)
+# plt.grid()
+# plt.show()
+
+
+# 2. showing total ROI for each index.
+# plt.figure(figsize=(12, 8))
+# plt.bar(total_rois['Stocks index'], total_rois['Total ROI'])
+# plt.ylabel('ROI %')
+# plt.title('Total ROI by indexes')
+# plt.rcParams.update({'font.size': 22})
+# plt.show()
+
+# 3. Each index graph deviation from standard.
+# Nasdaq graph
+# x = rusell['Date']
+# nas = nasdaq['Deviation from average'].mean()
+# filter_data = nasdaq[nasdaq['Deviation from average'] > nas]
+# filter_data2 = nasdaq[nasdaq['Deviation from average'] < nas]
+# plt.figure(figsize=(14, 10))
+# plt.plot(x, nasdaq['Deviation from average'], label='Nasdaq', color='darkgreen')
+# plt.scatter(filter_data.index, filter_data['Deviation from average'], color='red', label='20 dots above')
+# plt.scatter(filter_data2.index, filter_data2['Deviation from average'], color='blue', label='16 dots below')
+# plt.axhline(y=nas, color='black', linestyle='--')
+# plt.xlabel('Date')
+# plt.ylabel('Deviation from average')
+# plt.title('Nasdaq deviation from average')
+# plt.legend()
+# plt.xticks(x, rotation=45)
+# plt.show()
+
+# Russell 2000 graph
+# x = rusell['Date']
+# rus = rusell['Deviation from average'].mean()
+# filter_data_rus = rusell[rusell['Deviation from average'] > rus]
+# filter_data_rus2 = rusell[rusell['Deviation from average'] < rus]
+# plt.figure(figsize=(14, 10))
+# plt.plot(x, rusell['Deviation from average'], label='Russell2000', color='orange')
+# plt.scatter(filter_data_rus.index, filter_data_rus['Deviation from average'], color='red', label='18 dots above')
+# plt.scatter(filter_data_rus2.index, filter_data_rus2['Deviation from average'], color='blue', label='18 dots below')
+# plt.axhline(y=rus, color='black', linestyle='--')
+# plt.xlabel('Date')
+# plt.ylabel('Deviation from average')
+# plt.title('Russell 2000 deviation from average')
+# plt.legend()
+# plt.xticks(x, rotation=45)
+# plt.show()
+
+# SP500 graph
+# x = rusell['Date']
+# spy = sp500['Deviation from average'].mean()
+# filter_data_spy = sp500[sp500['Deviation from average'] > spy]
+# filter_data_spy2 = sp500[sp500['Deviation from average'] < spy]
+# plt.figure(figsize=(14, 10))
+# plt.plot(x, sp500['Deviation from average'], label='SP500', color='black')
+# plt.scatter(filter_data_spy.index, filter_data_spy['Deviation from average'], color='red', label='19 dots above')
+# plt.scatter(filter_data_spy2.index, filter_data_spy2['Deviation from average'], color='blue', label='17 dots below')
+# plt.axhline(y=spy, color='black', linestyle='--')
+# plt.xlabel('Date')
+# plt.ylabel('Deviation from average')
+# plt.title('SP500 deviation from average')
+# plt.legend()
+# plt.xticks(x, rotation=45)
+# plt.show()
 
 
 
