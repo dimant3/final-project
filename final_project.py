@@ -202,7 +202,6 @@ def show_russell2000_deviation():
     plt.xticks(x, rotation=45)
     plt.show()
 
-show_russell2000_deviation()
 
 # SP500 graph
 def show_sp500_deviation():

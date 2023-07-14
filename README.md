@@ -46,15 +46,18 @@ Steps:
     All visuals are controlled by functions, which helps to separate all graphs in the code
     
     If you call i.e. "def show_portfolio_values():" you will receive this view
-        ![alt_text](https://github.com/BhavyaC16/Plants-Vs-Zombies/blob/master/GameplayScreenshots/1.png) PAKEISTI
+        ![alt_text](https://github.com/dimant3/final-project/blob/dev/Screenshots/show_portfolio_value.png)
 
     Other functions:
     ROI for each index:
-        def show_index_total_roi():
+        ![alt_text](https://github.com/dimant3/final-project/blob/dev/Screenshots/show_portfolio_value.png) PAKEISTI
 
     function to show each index deviation from standard:
+    If you call i.e. "def show_russell2000_deviation():" you will receive this view
+        ![alt_text](https://github.com/dimant3/final-project/blob/dev/Screenshots/show_portfolio_value.png)
+        
+        other indexes:
         def show_nasdaq_deviation():
-        def show_russell2000_deviation():
         def show_sp500_deviation():
 
 4. Forecast:
@@ -63,7 +66,9 @@ Steps:
     To create and train the model we used: LinearRegression
 
     Example of forecasted S&P500 index result:
-        ![alt_text](https://github.com/BhavyaC16/Plants-Vs-Zombies/blob/master/GameplayScreenshots/1.png) PAKEISTI
+        ![alt_text](https://github.com/dimant3/final-project/blob/dev/Screenshots/sp500_forecast.png)
+        
+        other indexes:
         def nasdaq_forecast():
         def russell_forecast():
 
