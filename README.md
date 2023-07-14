@@ -50,11 +50,11 @@ Steps:
 
     Other functions:
     ROI for each index:
-        ![alt_text](https://github.com/dimant3/final-project/blob/dev/Screenshots/show_portfolio_value.png) PAKEISTI
+        ![alt_text](https://github.com/dimant3/final-project/blob/dev/Screenshots/show_index_total_roi.png) PAKEISTI
 
     function to show each index deviation from standard:
     If you call i.e. "def show_russell2000_deviation():" you will receive this view
-        ![alt_text](https://github.com/dimant3/final-project/blob/dev/Screenshots/show_portfolio_value.png)
+        ![alt_text](https://github.com/dimant3/final-project/blob/dev/Screenshots/show_russell2000_deviation.png)
         
         other indexes:
         def show_nasdaq_deviation():
