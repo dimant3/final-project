@@ -5,8 +5,10 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.linear_model import LinearRegression
 from sklearn.model_selection import train_test_split
+from matplotlib.dates import MonthLocator, YearLocator
+from datetime import datetime
 
-# formatting Nasdaq csv: date format and column split
+# formatting Nasdaq csv: date format
 nasdaq = pd.read_csv('Nasdaq OMX baltic.csv')
 nasdaq['Date'] = pd.to_datetime(nasdaq['Date'])
 nasdaq['Date'] = nasdaq['Date'].dt.strftime('%Y-%m')
@@ -200,6 +202,7 @@ def show_russell2000_deviation():
     plt.xticks(x, rotation=45)
     plt.show()
 
+show_russell2000_deviation()
 
 # SP500 graph
 def show_sp500_deviation():
@@ -234,34 +237,100 @@ def show_sp500_deviation():
 
 # FORECAST
 def nasdaq_forecast():
-    # sns.set()
-    x = rusell['Date']
-    plt.plot(x, nasdaq['Close'], )
+    sns.set()
 
-    train = x[x < pd.to_datetime("2022-11", format='%Y-%m')]
-    test = x[x > pd.to_datetime("2022-11", format='%Y-%m')]
+    x = pd.to_datetime(nasdaq['Date'])
+    y = nasdaq['Close']
 
-    plt.plot(train, color="black")
-    plt.plot(test, color="red")
+    # Train-test split
+    train_size = int(len(x) * 0.69) #69% for training
+    x_train, x_test = x[:train_size], x[train_size:]
+    y_train, y_test = y[:train_size], y[train_size:]
+
+    #Creating and training the model
+    model = LinearRegression()
+    x_train_ordinal = x_train.map(datetime.toordinal).values.reshape(-1, 1)
+    model.fit(x_train_ordinal, y_train)
+
+    # Predict on the test data
+    x_test_ordinal = x_test.map(datetime.toordinal).values.reshape(-1, 1)
+    y_pred = model.predict(x_test_ordinal)
+
+    # Pllot the actual data, predicted values and train-test split
     plt.figure(figsize=(14, 10))
+    plt.plot(x, y, label='Actual', color='black')
+    plt.plot(x_test, y_pred, label='Prediction', linestyle='--')
+    plt.plot(x_train, y_train, color='black')
+    plt.plot(x_test, y_test, label='Testing', color='red')
     plt.xlabel('Date')
     plt.ylabel('Index Price')
     plt.xticks(rotation=45)
     plt.title('Train/test split for Nasdaq index')
+    plt.legend()
     plt.show()
 
-def nasdaq_forecast2():
-    X = nasdaq['Close']
-    y = nasdaq
+def russell_forecast():
+    sns.set()
 
+    x = pd.to_datetime(rusell['Date'])
+    y = rusell['Close']
 
+    # Train-test split
+    train_size = int(len(x) * 0.69) #69% for training
+    x_train, x_test = x[:train_size], x[train_size:]
+    y_train, y_test = y[:train_size], y[train_size:]
 
-# print(nasdaq)
-# print(rusell)
-# print(sp500)
+    #Creating and training the model
+    model = LinearRegression()
+    x_train_ordinal = x_train.map(datetime.toordinal).values.reshape(-1, 1)
+    model.fit(x_train_ordinal, y_train)
 
+    # Predict on the test data
+    x_test_ordinal = x_test.map(datetime.toordinal).values.reshape(-1, 1)
+    y_pred = model.predict(x_test_ordinal)
 
-# nasdaq_index = np.array([nasdaq['Date']])
-# rusell_index = np.array([rusell['Close']])
-# sp500_index = np.array([sp500['close']])
-# print(rusell_index)
+    # Pllot the actual data, predicted values and train-test split
+    plt.figure(figsize=(14, 10))
+    plt.plot(x, y, label='Actual', color='black')
+    plt.plot(x_test, y_pred, label='Prediction', linestyle='--')
+    plt.plot(x_train, y_train, color='black')
+    plt.plot(x_test, y_test, label='Testing', color='red')
+    plt.xlabel('Date')
+    plt.ylabel('Index Price')
+    plt.xticks(rotation=45)
+    plt.title('Train/test split for Russell 2000 index')
+    plt.legend()
+    plt.show()
+
+def sp500_forecast():
+    sns.set()
+
+    x = pd.to_datetime(sp500['date'])
+    y = sp500['close']
+
+    # Train-test split
+    train_size = int(len(x) * 0.69) #69% for training
+    x_train, x_test = x[:train_size], x[train_size:]
+    y_train, y_test = y[:train_size], y[train_size:]
+
+    #Creating and training the model
+    model = LinearRegression()
+    x_train_ordinal = x_train.map(datetime.toordinal).values.reshape(-1, 1)
+    model.fit(x_train_ordinal, y_train)
+
+    # Predict on the test data
+    x_test_ordinal = x_test.map(datetime.toordinal).values.reshape(-1, 1)
+    y_pred = model.predict(x_test_ordinal)
+
+    # Pllot the actual data, predicted values and train-test split
+    plt.figure(figsize=(14, 10))
+    plt.plot(x, y, label='Actual', color='black')
+    plt.plot(x_test, y_pred, label='Prediction', linestyle='--')
+    plt.plot(x_train, y_train, color='black')
+    plt.plot(x_test, y_test, label='Testing', color='red')
+    plt.xlabel('Date')
+    plt.ylabel('Index Price')
+    plt.xticks(rotation=45)
+    plt.title('Train/test split for S&P500 index')
+    plt.legend()
+    plt.show()
