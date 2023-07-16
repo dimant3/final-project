@@ -56,8 +56,12 @@ Steps:
     - Total ROI by Index:
         ![alt_text](https://github.com/dimant3/final-project/blob/dev/Screenshots/show_index_total_roi.png)
 
-    - function to show each index deviation from standard:
+        Graph shows: Nasdaq: 38.15%, Russell 2000: 9.12%, S&P500: 18.87%
+
+    - Function to show each index deviation from standard:
+
         For example if you call def "show_russell2000_deviation():" you will receive this view:
+        
         ![alt_text](https://github.com/dimant3/final-project/blob/dev/Screenshots/show_russell2000_deviation.png)
         
         other indexes:
