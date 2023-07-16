@@ -16,14 +16,18 @@ Used libraries: Pandas, NumPy, MatplotLib, SeaBorn, sklearn.linear_model
 
 ### postgres.py
 Used database adapter: psycopg2
+
 Steps:
+
 1. Creating of postgres connection settings (def db_con():)
 2. Writing function to create table into vcs_final_project database (def create_table():)
 3. Creating connection to database for data analysis (def work_with_database():)
 
 ### web_scrap.py
 Used imports: psycopg2, BeautifulSoup, requests, time, postgres.py
+
 Steps:
+
 1. Finding necessary S&P 500 index data from URL (https://finance.yahoo.com/quote/SPY/history)
 2. Getting needed data from url as table using Beautiful soup and indicate analysis method (html.parser)
 3. Using "if" and "for" received data inserted into table in Postgres
@@ -36,6 +40,7 @@ Steps:
 1. Unified all INDEXES data by formating Dates and selected 'Close' price columns
 
 2. Calculations for each index: 
+
     - stocks bought at the starting point on 2020.01
     - Monthly and whole 3Y period ROI%
     - Deviations from average close price
@@ -60,6 +65,7 @@ Steps:
         def show_sp500_deviation():
 
 4. Forecast:
+
     Forecast of indexes performance based on 69% training of historical data.
 
     To create and train the model we used: LinearRegression
