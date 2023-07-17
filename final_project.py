@@ -4,8 +4,6 @@ import numpy as np
 import matplotlib.pyplot as plt
 import seaborn as sns
 from sklearn.linear_model import LinearRegression
-from sklearn.model_selection import train_test_split
-from matplotlib.dates import MonthLocator, YearLocator
 from datetime import datetime
 
 # formatting Nasdaq csv: date format
@@ -243,13 +241,15 @@ def nasdaq_forecast():
     x = pd.to_datetime(nasdaq['Date'])
     y = nasdaq['Close']
 
-    # Train-test split
+    # Train-test
     train_size = int(len(x) * 0.69) #69% for training
     x_train, x_test = x[:train_size], x[train_size:]
     y_train, y_test = y[:train_size], y[train_size:]
 
     #Creating and training the model
     model = LinearRegression()
+    # datetime.toordinal returns the ordinal value for the given DateTime object.
+    # reshape to pick up columns
     x_train_ordinal = x_train.map(datetime.toordinal).values.reshape(-1, 1)
     model.fit(x_train_ordinal, y_train)
 
