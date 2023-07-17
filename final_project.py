@@ -9,18 +9,19 @@ from matplotlib.dates import MonthLocator, YearLocator
 from datetime import datetime
 
 # formatting Nasdaq csv: date format
-nasdaq = pd.read_csv('Nasdaq OMX baltic.csv')
+nasdaq = pd.read_csv('Nasdaq OMX baltic.csv', encoding='utf8')
 nasdaq['Date'] = pd.to_datetime(nasdaq['Date'])
 nasdaq['Date'] = nasdaq['Date'].dt.strftime('%Y-%m')
 # print(nasdaq)
 
 # formatting Russell 2000 index csv: date format, 2 column pick (Date and Close) + round
-rusell = pd.read_csv('RUT Russell 2000.csv')
+rusell = pd.read_csv('RUT Russell 2000.csv', encoding='utf8')
 rusell['Date'] = pd.to_datetime(rusell['Date'])
 rusell['Date'] = rusell['Date'].dt.strftime('%Y-%m')
 rusell['Close'] = round(rusell['Close'], 2)
 
-# To avoid ERROR "A value is trying to be set on a copy of a slice from a DataFrame. Try using .loc[row_indexer,col_indexer] = value instead"
+# To avoid ERROR "A value is trying to be set on a copy of a slice from a DataFrame.
+# Try using .loc[row_indexer,col_indexer] = value instead"
 # we needed to create a Dictionary of values
 rusell = pd.DataFrame({
     'Date': ['2020-01', '2020-02', '2020-03', '2020-04', '2020-05', '2020-06', '2020-07',
@@ -225,7 +226,7 @@ def show_sp500_deviation():
 # function to call 1st graph - Portfolio values by indexes
 # show_portfolio_values()
 
-# funtion to call 2nd graph - Total ROI by indexes for whole period
+# function to call 2nd graph - Total ROI by indexes for whole period
 # show_index_total_roi()
 
 # function to call 3rd graphs - indexes deviation vs average deviation
@@ -236,6 +237,7 @@ def show_sp500_deviation():
 
 # FORECAST
 def nasdaq_forecast():
+    # load seaborn's default theme and color palette to the session.
     sns.set()
 
     x = pd.to_datetime(nasdaq['Date'])
@@ -255,7 +257,7 @@ def nasdaq_forecast():
     x_test_ordinal = x_test.map(datetime.toordinal).values.reshape(-1, 1)
     y_pred = model.predict(x_test_ordinal)
 
-    # Pllot the actual data, predicted values and train-test split
+    # Plot the actual data, predicted values and train-test split
     plt.figure(figsize=(14, 10))
     plt.plot(x, y, label='Actual', color='black')
     plt.plot(x_test, y_pred, label='Prediction', linestyle='--')
