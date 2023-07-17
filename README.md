@@ -70,7 +70,9 @@ Steps:
 
 4. Forecast:
 
-    Forecast of indexes performance based on 69% training of historical data.
+   From 2022 all the indexes started downtrend movement based on 2 major events: russia - Ukraine war and central banks aggressive rate      hikes. In our forecast model we skipped downturn movement and wanted to show how indexes would likely to perform if global situation      were steady based on LinearRegression model and historical data.
+
+   Forecast of indexes performance based on 69% training of historical data.
 
     To create and train the model we used: LinearRegression
 
