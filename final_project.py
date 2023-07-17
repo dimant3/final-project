@@ -121,7 +121,7 @@ max_value_sp500 = np.max(sp500['Portfolio value'])  # 14762.69
 # we found out highest difference between min and max in: nasdaq = 8721.28, rusell = 7171.04 , sp500 = 6751.31
 
 
-# In next steps we creating visualization with matplotlib and seaborn
+# In next steps we're creating visualization with matplotlib and seaborn
 
 # 1. creating function to call Indexes portfolio values by month
 def show_portfolio_values():
@@ -134,13 +134,13 @@ def show_portfolio_values():
 
     # Marking the highest value points in each index
     plt.plot(highest_nasdaq_value_index, max_value_nasdaq, marker='o', color='black', label="Highest")
-    plt.plot(lowest_nasdaq_value_index, min_value_nasdaq, marker='o', color='black', label="Lowest")
+    plt.plot(lowest_nasdaq_value_index, min_value_nasdaq, marker='o', color='orange', label="Lowest")
 
     plt.plot(highest_rusell_value_index, max_value_rusell, marker='o', color='black')
-    plt.plot(lowest_rusell_value_index, min_value_rusell, marker='o', color='black')
+    plt.plot(lowest_rusell_value_index, min_value_rusell, marker='o', color='orange')
 
     plt.plot(highest_sp500_value_index, max_value_sp500, marker='o', color='black')
-    plt.plot(lowest_sp500_value_index, min_value_sp500, marker='o', color='black')
+    plt.plot(lowest_sp500_value_index, min_value_sp500, marker='o', color='orange')
 
     # add legend
     plt.legend(title='Portfolio values by INDEX')
@@ -321,7 +321,7 @@ def sp500_forecast():
     x_test_ordinal = x_test.map(datetime.toordinal).values.reshape(-1, 1)
     y_pred = model.predict(x_test_ordinal)
 
-    # Pllot the actual data, predicted values and train-test split
+    # Plot the actual data, predicted values and train-test split
     plt.figure(figsize=(14, 10))
     plt.plot(x, y, label='Actual', color='black')
     plt.plot(x_test, y_pred, label='Prediction', linestyle='--')
