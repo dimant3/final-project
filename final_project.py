@@ -9,13 +9,13 @@ from matplotlib.dates import MonthLocator, YearLocator
 from datetime import datetime
 
 # formatting Nasdaq csv: date format
-nasdaq = pd.read_csv('Nasdaq OMX baltic.csv', encoding='utf8')
+nasdaq = pd.read_csv('Nasdaq OMX baltic.csv', encoding="utf8")
 nasdaq['Date'] = pd.to_datetime(nasdaq['Date'])
 nasdaq['Date'] = nasdaq['Date'].dt.strftime('%Y-%m')
 # print(nasdaq)
 
 # formatting Russell 2000 index csv: date format, 2 column pick (Date and Close) + round
-rusell = pd.read_csv('RUT Russell 2000.csv', encoding='utf8')
+rusell = pd.read_csv('RUT Russell 2000.csv', encoding="utf8")
 rusell['Date'] = pd.to_datetime(rusell['Date'])
 rusell['Date'] = rusell['Date'].dt.strftime('%Y-%m')
 rusell['Close'] = round(rusell['Close'], 2)
