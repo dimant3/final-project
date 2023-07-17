@@ -309,7 +309,7 @@ def sp500_forecast():
     x = pd.to_datetime(sp500['date'])
     y = sp500['close']
 
-    # Train-test split
+    # Train-test | train_size date values converted to number (36 values)
     train_size = int(len(x) * 0.69) #69% for training
     x_train, x_test = x[:train_size], x[train_size:]
     y_train, y_test = y[:train_size], y[train_size:]
