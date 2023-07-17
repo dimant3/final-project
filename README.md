@@ -81,8 +81,8 @@ Steps:
         def nasdaq_forecast():
         def russell_forecast():
 
-## Conlusion
+## Conclusion
 
-In addition, at the highest points of value, Nasdaq would bring us almost 6.5kEUR profit (while others less than 5kEUR) and it remained highest until the end of the analysed period. Also, using Boolean in our calculations to find out how many times INDEXES were above their average 'Close' price, it showed us, that Nasdaq Index was 22 months above it's average 'Close' price out of 36 months, while Russell 2000: 18 and S&P500: 19 months.
+In addition, at the highest points of value, Nasdaq would bring us almost 6.5kEUR profit (while others less than 5kEUR) and it remained highest until the end of the analysed period. Also, using Boolean in our calculations to find out how many times INDEXES were above their average 'Close' price, it showed us, that Nasdaq Index was 20 months above it's average 'Close' price out of 36 months, while Russell 2000: 18 and S&P500: 19 months. The lowest points of our each portfolio were: Nasdaq Baltic OMX 7708 €, Russell - 7144 € and S&P500 - 8011 €. 
 
 To sum up, after we made all calculations and visualizations, we found out that "Nasdaq OMX baltics" would be best choice to put our 10'000€ as it's performance was best out of three during whole period.
